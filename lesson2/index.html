@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    1. <br>
+    var a = 1, b = 1, c, d; <br>
+    c = ++a; alert(c); // 2 ---- ++ перед 'a' это префиксная форма которая возвращает новое значение <br>
+    d = b++; alert(d); // 1 ---- это постфиксная форма которая так же увеличивает число но возвращает старое значение
+    <br>
+    c = (2+ ++a); alert(c); // 5 ---- 'a' уже 2 после первой операции и прибавляется 1 в этой, 3+2=5 <br>
+    d = (2+ b++); alert(d); // 4 ---- 'b' уже 2 после второй операции, а в этой постфиксная форма ++ в алерт это <br>
+    значение не прибавляет
+    alert(a); // 3 ---- и префиксное и постфиксное значение уже посчитано <br>
+    alert(b); // 3 ---- и префиксное и постфиксное значение уже посчитано <br>
+    <br>
+    2.
+    var a = 2;
+    var x = 1 + (a *= 2);
+
+    x равен 5. (a *= 2) это a = a * 2 = 4
+
+
+
+    <script class="3.">
+        var a = 16;
+        var b = 45;
+        if (Math.sign(a) >= 0 && (Math.sign(b)) >= 0) {
+            console.log(a - b);
+        }
+        else if (Math.sign(a) < 0 && Math.sign(b) < 0) {
+            console.log(a * b);
+        }
+        else if (Math.sign(a) !== Math.sign(b)) {
+            console.log(a + b);
+        }
+    </script>
+    <script class="4.">
+        var a = 4
+
+        switch (a) {
+            case 1:
+                console.log('1 ');
+
+            case 2:
+                console.log('2 ');
+
+            case 3:
+                console.log('3 ');
+
+            case 4:
+                console.log('4 ');
+
+            case 5:
+                console.log('5 ');
+
+            case 6:
+                console.log('6 ');
+
+            case 7:
+                console.log('7 ');
+
+            case 8:
+                console.log('8 ');
+
+            case 9:
+                console.log('9 ');
+
+            case 10:
+                console.log('10 ');
+
+            case 11:
+                console.log('11 ');
+
+            case 12:
+                console.log('12 ');
+
+            case 13:
+                console.log('13 ');
+
+            case 14:
+                console.log('14 ');
+
+            case 15:
+                console.log('15');
+                break;
+        }
+    </script>
+    <script class="5.">
+        function minus(a, b) {
+
+            return (a - b);
+        }
+
+        function plus(a, b) {
+            return (a + b);
+        }
+
+        function div(a, b) {
+            return (a / b);
+        }
+        function multi(a, b) {
+            return (a * b);
+        }
+
+        // minus(10, 5)
+        // plus(10, 5)
+        // div(10, 5)
+        // multi(10, 5)
+
+    </script>
+    <script class="6.">
+        function mathOperation(arg1, arg2, operation) {
+            switch (operation) {
+                case 'minus':
+                    return (arg1 - arg2);
+                case 'plus':
+                    return (arg1 + arg2);
+                case 'div':
+                    return (arg1 / arg2);
+                case 'multi':
+                    return (arg1 * arg2);
+            }
+        }
+    </script>
+</body>
+
+</html>
