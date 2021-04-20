@@ -1,0 +1,18 @@
+.header {
+  height: 40px;
+  background-color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.product-item {
+  background-color: grey;
+  width: 90px;
+}
+
+.btn-cart {
+  width: 80px;
+  border: 1px solid white;
+}
