@@ -3,7 +3,7 @@ class ProductList {
     this.container = container;
     this.goods = [];
     this.allProducts = [];
-    this.total = this.getTotal();
+    // this.total = this.getTotal();
 
     this.fetchGoods();
     this.render();
@@ -14,7 +14,7 @@ class ProductList {
   }
 
   getTotal() {
-    this.total = this.goods.reduce((prev, next) => prev + next.price, 0);
+    return this.goods.reduce((prev, next) => prev + next.price, 0);
 
     console.log(this.total);
     // this.total.push(total);
@@ -58,7 +58,6 @@ class ProductItem {
                   </div>`;
   }
 }
-
 // примерные классы для корзины
 // class CartList{
 //   constructor(container = '.cart') {
