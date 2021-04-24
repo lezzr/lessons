@@ -59,4 +59,22 @@ class ProductItem {
   }
 }
 
+// примерные классы для корзины
+// class CartList{
+//   constructor(container = '.cart') {
+//     this.container = container;
+//     this.cartGoods = [];
+//     this.cartCount = getCount(); количество товаров(?)
+// }
+// }
+
+// class CartItem{
+//   constructor(product, img = 'https://via.placeholder.com/200x150') {
+//     this.title = product.title;
+//     this.price = product.price;
+//     this.id = product.id;
+//     this.img = img;
+//   }
+// }
+
 new ProductList();
