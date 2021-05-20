@@ -1,0 +1,142 @@
+[
+    {
+        "time": "30 Jan 2020, 7:54:11 pm",
+        "action": "change"
+    },
+    {
+        "time": "30 Jan 2020, 7:54:15 pm",
+        "action": "change"
+    },
+    {
+        "time": "30 Jan 2020, 7:54:20 pm",
+        "action": "change"
+    },
+    {
+        "time": "30 Jan 2020, 7:54:21 pm",
+        "prod_name": "Мышка",
+        "action": "add"
+    },
+    {
+        "time": "30 Jan 2020, 7:54:22 pm",
+        "action": "remove"
+    },
+    {
+        "time": "30 Jan 2020, 7:54:22 pm",
+        "action": "remove"
+    },
+    {
+        "time": "30 Jan 2020, 8:06:14 pm",
+        "action": "change"
+    },
+    {
+        "time": "30 Jan 2020, 8:06:16 pm",
+        "action": "change"
+    },
+    {
+        "time": "30 Jan 2020, 8:06:17 pm",
+        "action": "remove"
+    },
+    {
+        "time": "30 Jan 2020, 8:06:18 pm",
+        "action": "remove"
+    },
+    {
+        "time": "30 Jan 2020, 8:06:21 pm",
+        "prod_name": "Ноутбук",
+        "action": "add"
+    },
+    {
+        "time": "30 Jan 2020, 8:06:21 pm",
+        "prod_name": "Gamepad",
+        "action": "add"
+    },
+    {
+        "time": "30 Jan 2020, 8:06:22 pm",
+        "prod_name": "Keyboard",
+        "action": "add"
+    },
+    {
+        "time": "30 Jan 2020, 8:06:23 pm",
+        "action": "change"
+    },
+    {
+        "time": "16 May 2021, 1:33:52 pm",
+        "prod_name": "Ноутбук",
+        "action": "change"
+    },
+    {
+        "time": "16 May 2021, 1:33:54 pm",
+        "prod_name": "Ноутбук",
+        "action": "remove"
+    },
+    {
+        "time": "16 May 2021, 1:33:54 pm",
+        "prod_name": "Gamepad",
+        "action": "remove"
+    },
+    {
+        "time": "16 May 2021, 1:33:55 pm",
+        "prod_name": "Keyboard",
+        "action": "remove"
+    },
+    {
+        "time": "16 May 2021, 1:33:56 pm",
+        "prod_name": "Мышка",
+        "action": "add"
+    },
+    {
+        "time": "16 May 2021, 1:33:57 pm",
+        "prod_name": "Ноутбук",
+        "action": "add"
+    },
+    {
+        "time": "16 May 2021, 1:33:58 pm",
+        "prod_name": "Gamepad",
+        "action": "add"
+    },
+    {
+        "time": "16 May 2021, 1:34:00 pm",
+        "prod_name": "Мышка",
+        "action": "remove"
+    },
+    {
+        "time": "16 May 2021, 1:34:00 pm",
+        "prod_name": "Ноутбук",
+        "action": "remove"
+    },
+    {
+        "time": "16 May 2021, 1:34:01 pm",
+        "prod_name": "Gamepad",
+        "action": "remove"
+    },
+    {
+        "time": "16 May 2021, 1:36:57 pm",
+        "prod_name": "Ноутбук",
+        "action": "add"
+    },
+    {
+        "time": "16 May 2021, 1:36:58 pm",
+        "prod_name": "Gamepad",
+        "action": "add"
+    },
+    {
+        "time": "16 May 2021, 1:36:58 pm",
+        "prod_name": "Gamepad",
+        "action": "change"
+    },
+    {
+        "time": "16 May 2021, 1:37:00 pm",
+        "prod_name": "Ноутбук",
+        "action": "remove"
+    },
+    {
+        "time": "16 May 2021, 1:37:01 pm",
+        "prod_name": "Gamepad",
+        "action": "change"
+    },
+    {
+        "time": "16 May 2021, 1:37:02 pm",
+        "prod_name": "Gamepad",
+        "action": "remove"
+    }
+]
