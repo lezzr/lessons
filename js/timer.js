@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
   let buttonRun = document.getElementById('button');
   let timerShow = document.getElementById('timer');
   let btnStop = document.getElementById('button-stop');
-
+  import audio from '../audio.mp3';
   let timer;
-  let audio = new Audio('../audio.mp3');
+  let audio = new Audio(audio);
 
   buttonRun.addEventListener('click', function () {
     let timeMinute;
