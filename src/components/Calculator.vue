@@ -127,7 +127,7 @@ export default {
           this[this.picked] = this[this.picked]+'0'
           break;
         case '<':
-          this.remLast()
+          this[this.picked] = this[this.picked].toString().slice(0, -1)
           break;
       }
     },
