@@ -9,9 +9,9 @@ export function MessageProvider({children}){
         {title:"room3", value:""}
     ])
     const [messages, setMessages] = useState({
-        room1:[{ value: "hello", author: "tester" }],
-        room2:[{ value: "hello2", author: "tester" }],
-        room3:[{ value: "hello33", author: "tester" }]
+        room1:[{ message: "hello", author: "tester" }],
+        room2:[{ message: "hello2", author: "tester" }],
+        room3:[{ message: "hello33", author: "tester" }]
 
     })
 
@@ -55,6 +55,7 @@ export function MessageProvider({children}){
                 updateConversations(value)
             },
         }
+
     }, [roomId, updateConversations])
 
     useEffect(()=>{
@@ -65,13 +66,12 @@ export function MessageProvider({children}){
         if (lastMessage?.author !== "bot"){
             timerId = setTimeout(
                 ()=> actions.sendMessage({message: `Hello im bot from ${roomId}`, author: "bot"}),
-                9000
+                3000
             )
         }
         return ()=> clearInterval(timerId)
     }, [messages, roomId, actions])
 
-    console.log(messages[roomId])
 
     return children([state, actions])
 }

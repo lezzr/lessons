@@ -5,16 +5,13 @@ export function Chat() {
     return <Switch>
         <Route path={["/chats/:roomId", "/chats"]}>
                 <MessageProvider>
-                    {([state])=>(
+                    {([state, actions])=>(
                         <Layout
                             header={<Header/>}
                             chats={<ChatList {...state}/>}
                         >
                             <Route path="/chats/:roomId">
-                                <MessageList {...state}/>
-                            </Route>
-                            <Route exact={true} path="/chats">
-                                <h2>выбрать чат/сообщени?</h2>
+                                <MessageList {...state} {...actions}/>
                             </Route>
                         </Layout>
                     )}

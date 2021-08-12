@@ -1,5 +1,5 @@
 import {ThemeProvider, createTheme} from "@material-ui/core"
-import {BrowserRouter, Switch, Route} from "react-router-dom"
+import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom"
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { App,} from './App';
@@ -33,7 +33,10 @@ ReactDOM.render(
                   <Chat/>
               )} />
               <Route path="*" component={()=>(
-                                        <h1>404now</h1>
+                  <Redirect to="/chats/room1" />
+              )} />
+              <Route exact path="chats/*" component={()=>(
+                  <Redirect to="/chats/room1" />
               )} />
 
           </Switch>

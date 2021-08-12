@@ -1,12 +1,13 @@
 import { useRef,} from "react";
 import './App.css';
 import {Button, Input, InputAdornment, makeStyles} from "@material-ui/core";
+// import { Send } from "@material-ui/icons"
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import { Message } from "./message"
+// import { Message } from "./message"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,6 +24,8 @@ export const MessageList = ({messages, value, sendMessage, handleChangeValue}) =
     // ])
 
     const ref = useRef()
+    // const loggy = () => {
+    //     console.log(handleChangeValue, sendMessage) }
 
     const handleSendMessage = () => {
         if (value){
@@ -50,11 +53,11 @@ export const MessageList = ({messages, value, sendMessage, handleChangeValue}) =
 
     return (
         <>
-            <div ref={ref}>
-                {messages.map((message, id) => (
-                    <Message key={id} {...message} />
-                ))}
-            </div>
+            {/*<div ref={ref}>*/}
+            {/*    {messages.map((message, id) => (*/}
+            {/*        <Message key={id} {...message} />*/}
+            {/*    ))}*/}
+            {/*</div>*/}
 
             <List className={classes.root}>
                 {messages.map((message, index) => (
@@ -76,14 +79,20 @@ export const MessageList = ({messages, value, sendMessage, handleChangeValue}) =
                    onChange={handleChangeValue}
                    fullWidth={true}
                    placeholder={"Сообщение..."}
-                   endAdornment={<InputAdornment position={"end"}>
-                       <Button variant="contained" color="primary" onClick={handleSendMessage}
-                       >
+                   endAdornment={
+                       <InputAdornment position={"end"}>
+                       {value &&(<Button variant="contained" color="primary" onClick={handleSendMessage}                                                                >
                            send
-                       </Button>
+                       </Button>)}
+                       {/*<Send variant="contained" color="primary" onClick={handleSendMessage} />*/}
+
+                       {/*<Button variant="contained" color="primary" onClick={loggy}*/}
+                       {/*>*/}
+                       {/*    logg*/}
+                       {/*</Button>*/}
                    </InputAdornment>}
             />
 
         </>
-    );
+    )
 }
