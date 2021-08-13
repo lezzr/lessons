@@ -3,7 +3,7 @@ import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom"
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { App,} from './App';
-import {Chat} from "./pages"
+import {Chat, Profile, Home} from "./pages"
 
 const user = {name: "Test Name", className: "class Test Name"}
 const handleClick = ()=>{
@@ -24,6 +24,9 @@ ReactDOM.render(
       <BrowserRouter>
       <ThemeProvider theme={theme}>
           <Switch>
+              <Route exact path="/" component={()=>(
+                  <Home/>
+              )} />
               <Route path="/chat" component={()=>(
                   <App user={user} handleClick={handleClick}>
                       <h1>Children App</h1>
@@ -31,6 +34,9 @@ ReactDOM.render(
               )} />
               <Route path="/chats" component={()=>(
                   <Chat/>
+              )} />
+              <Route path="/profile" component={()=>(
+                  <Profile/>
               )} />
               <Route path="*" component={()=>(
                   <Redirect to="/chats/room1" />

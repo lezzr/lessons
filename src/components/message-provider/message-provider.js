@@ -60,7 +60,7 @@ export function MessageProvider({children}){
 
     useEffect(()=>{
         let timerId = null
-        const lastMessage = messages[roomId][messages[roomId].length - 1]
+        const lastMessage = messages[roomId][messages[roomId].length - 1 ]
 
 
         if (lastMessage?.author !== "bot"){
