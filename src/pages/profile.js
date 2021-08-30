@@ -1,7 +1,5 @@
 import { useDispatch, useSelector} from 'react-redux'
 import { toggleName} from "../store/profile/"
-import {Link} from "react-router-dom";
-import {Button} from "@material-ui/core";
 import React from "react";
 
 // function ProfileWithHooks(){
@@ -15,23 +13,14 @@ import React from "react";
 //     </div>
 // }
 
-export function Profile (
-    // {count, increment, decrement}
-){
-    // const count = useSelector((state) => state.profile.count)
+export function Profile ({session}){
     const userName = useSelector((state) => state.profile.user.name)
     const nameVisible = useSelector((state) => state.profile.nameVisible)
     const dispatch = useDispatch()
     return <div>
-            <Button variant="contained" color="primary"><Link to="/chats/room1">GO CHAT1</Link></Button>
-            <br/>
-            {/*<h2>profile here</h2>*/}
-            {/*<h2>count here ins ---- {count}</h2>*/}
-            {/*<button onClick={()=> dispatch(increment())}>incr ins</button>*/}
-            {/*<button onClick={()=> dispatch(decrement())}>dec ins</button>*/}
-            {/*<br/>*/}
-        {/*<ProfileWithHooks/>*/}
+
         {nameVisible && <h2>User Name: {userName}</h2>}
+        {session?.email  && nameVisible && <h2>User Email: {session.email}</h2>}
             <input
                 type="checkbox"
                 value={nameVisible}

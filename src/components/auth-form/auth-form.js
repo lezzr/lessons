@@ -24,7 +24,7 @@ export function LoginForm({title, submitButton, onSubmit}){
             className={styles.input}/>
         <Button
             fullWidth={true}
-            onSubmit={onSubmit}
+            onClick={()=> onSubmit(email, password)}
         >{submitButton}</Button>
     </div>
 }

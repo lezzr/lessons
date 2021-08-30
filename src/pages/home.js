@@ -4,5 +4,7 @@ export function Home(){
     <Link to="/chats/room1">Chats</Link>
         <br/>
     <Link to="/profile">Profile</Link>
+        <br/>
+    <Link to="/login">Login</Link>
     </div>
 }

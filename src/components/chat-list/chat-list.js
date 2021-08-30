@@ -18,8 +18,9 @@ export const ChatList = () => {
     const {roomId} = useParams()
     const classes = useStyles();
     const {conversations} = useSelector(state => state.conversations)
-    const messages = useSelector(state => state.messages.messages[roomId])
-    const lastMessage = messages[messages.length -1]
+    // const messages = useSelector(state => state.messages.messages[roomId])
+    // const lastMessage = messages[messages.length -1]
+
 
     return <div>
         <List className={classes.root} component="nav">
@@ -39,7 +40,7 @@ export const ChatList = () => {
                         >
 
 
-                            <ListItemText primary={chat.title} secondary={`${lastMessage.author}: ${lastMessage.message}`} />
+                            <ListItemText primary={chat.title} secondary={`test`} />
                         </ListItem>
                     </Link>
                 )

@@ -1,9 +1,9 @@
-import {HANDLE_CHANGE_MESSAGE_VALUE, CLEAR_MESSAGE_VALUE} from  './types'
+import {HANDLE_CHANGE_MESSAGE_VALUE, CLEAR_MESSAGE_VALUE, GET_CONVERSATIONS_FB} from  './types'
 const initialState = {
     conversations: [
-        {title:"room1", value:""},
-        {title:"room2", value:""},
-        {title:"room3", value:""}
+        // {title:"room1", value:""},
+        // {title:"room2", value:""},
+        // {title:"room3", value:""}
     ]
 }
 
@@ -24,6 +24,12 @@ export const conversationsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 conversations: updateConversations(state, action.payload, "")
+            }
+        }
+        case GET_CONVERSATIONS_FB:{
+            return {
+                ...state,
+                conversations: action.payload
             }
         }
         default:

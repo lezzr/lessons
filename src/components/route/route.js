@@ -5,5 +5,5 @@ export function PrivateRoute({isAuth, ...rest}){
 }
 
 export function PublicRoute({isAuth, ...rest}){
-    return !isAuth ? <Route {...rest}/>: <Redirect to="/"/>
+    return !isAuth ? <Route {...rest}/>: <Redirect to="/chats/room1"/>
 }

@@ -8,7 +8,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
-import { handleChangeMessageValue} from "../../store/conversations";
+import { handleChangeMessageValueFB} from "../../store/conversations";
 import {
     // sendMessage,
     sendMessageWithThunk} from "../../store/messages"
@@ -62,7 +62,7 @@ export const MessageList = () => {
                    className={"msg-input"}
                    value={value}
                    // defaultValue={value}
-                   onChange={(e)=> dispatch(handleChangeMessageValue(e.target.value, roomId))}
+                   onChange={(e)=> dispatch(handleChangeMessageValueFB(e.target.value, roomId))}
                    fullWidth={true}
                    placeholder={"Сообщение..."}
                    endAdornment={

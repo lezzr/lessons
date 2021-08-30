@@ -23,7 +23,9 @@ const useStyles = makeStyles(() => {
 export function Chat({ title, selected, handleListItemClick, lastMessage }) {
     const s = useStyles()
 
+
     return (
+
         <ListItem
             className={s.item}
             button={true}
