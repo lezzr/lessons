@@ -1,0 +1,77 @@
+{
+
+  "products":[
+  {
+    "image": "1.png",
+    "name": "T-SHIRT 1",
+    "price": 50.00,
+    "article": "T1",
+    "available": true,
+    "description": "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi."
+  },
+  {
+      "image": "2.png",
+      "name": "T-SHIRT 2",
+      "price": 51.00,
+      "article": "T2",
+      "available": true,
+      "description": "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi."
+  },
+  {
+      "image": "3.png",
+      "name": "T-SHIRT 3",
+      "price": 52.00,
+      "article": "T3",
+      "available": true,
+      "description": "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi."
+  },
+  {
+      "image": "4.png",
+      "name": "T-SHIRT 4",
+      "price": 53.00,
+      "article": "T4",
+      "available": true,
+      "description": "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi."
+  },
+  {
+    "image": "5.png",
+    "name": "T-SHIRT 5",
+    "price": 54.00,
+    "article": "T5",
+    "available": true,
+    "description": "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi."
+    },
+  {
+    "image": "6.png",
+    "name": "T-SHIRT 6",
+    "price": 55.00,
+    "article": "T6",
+    "available": true,
+    "description": "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi."
+    },
+  {
+    "image": "7.png",
+    "name": "T-SHIRT 7",
+    "price": 56.00,
+    "article": "T7",
+    "available": true,
+    "description": "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi."
+    },
+    {
+      "image": "8.png",
+      "name": "T-SHIRT 8",
+      "price": 57.00,
+      "article": "T8",
+      "available": true,
+      "description": "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi."
+    },
+    {
+      "image": "9.png",
+      "name": "T-SHIRT 9",
+      "price": 58.00,
+      "article": "T9",
+      "available": true,
+      "description": "Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi."
+    }
+  ]
+}
