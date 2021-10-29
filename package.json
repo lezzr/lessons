@@ -1,0 +1,15 @@
+{
+  "name": "project-template",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "start": ""
+  },
+  "devDependencies": {
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "date-fns": "^2.25.0",
+    "moment": "^2.29.1"
+  }
+}
