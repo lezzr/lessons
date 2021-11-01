@@ -1,6 +1,6 @@
 import { renderSearchFormBlock } from './search-form.js'
 import { renderSearchStubBlock } from './search-results.js'
-import { renderUserBlock } from './user.js'
+import { renderUserBlock, getUserData, getFavouritesAmountData } from './user.js'
 import { renderToast } from './lib.js'
 
 
@@ -9,20 +9,20 @@ import { renderToast } from './lib.js'
 const dateNow = new Date()
 
 
-type userData = {
-  userName: unknown
-  userAvatar: unknown
-  favouriteItemAmount?: unknown
-
-}
-const userData = {
-  userName: 'Wade Warren',
-  userAvatar: './img/avatar.png',
-  favouriteItemAmount: 3
-}
-localStorage.setItem('userData', JSON.stringify(userData))
-const getUserData = JSON.parse(localStorage.getItem('userData'))
-console.log(getUserData.userName)
+// type userData = {
+//   userName: unknown
+//   userAvatar: unknown
+//   favouriteItemAmount?: unknown
+//
+// }
+// const userData = {
+//   userName: 'Wade Warren',
+//   userAvatar: './img/avatar.png',
+//   favouriteItemAmount: 3
+// }
+// localStorage.setItem('userData', JSON.stringify(userData))
+// const getUserData = JSON.parse(localStorage.getItem('userData'))
+// console.log(getUserData.userName)
 
 // const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
 const dateStringNow = dateNow
@@ -67,7 +67,7 @@ const dateStringDayPlusOne = new Intl.DateTimeFormat()
 console.log(dateStringLateMax)
 
 window.addEventListener('DOMContentLoaded', () => {
-  renderUserBlock(getUserData.favouriteItemAmount, getUserData.userName, getUserData.userAvatar)
+  renderUserBlock(getUserData.userAvatar, getUserData.userName, getFavouritesAmountData)
   renderSearchFormBlock(`${dateStringNow}`, `${dateStringNow}`, `${dateStringNowMax}`, `${dateStringLate}`, `${dateStringLate}`, `${dateStringLateMax}`)
   renderSearchStubBlock()
   renderToast(

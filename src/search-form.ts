@@ -3,10 +3,7 @@ import { renderBlock } from './lib.js'
 
 export interface SearchFormData{
   dateIn: string
-
   dateOut:string
-
-
   maxPay: unknown
   // searchHandler(dateIn: string, dateOut: string, maxPay: unknown): void
 }
@@ -66,14 +63,21 @@ export function renderSearchFormBlock (dateIn: string, dateInMin: string, dateIn
         </div>
       </fieldset>
     </form>
-    <div><button id="searchButton2">Найти222</button></div>
     `
   )
+
+  const searchButton = document.getElementById('searchButton')
+  if (searchButton != null){
+        searchButton.onclick = ()=>{
+      search(getSearchFormData())
+    }
+  }
 
 }
 
 export function getSearchFormData(): SearchFormData{
   const formData = new FormData(document.querySelector('#search-form'))
+
 
   return {
     dateIn: formData.get('checkin') as string,
@@ -83,28 +87,8 @@ export function getSearchFormData(): SearchFormData{
 
 }
 
-export function search (SearchFormData: SearchFormData, cb: (err: Error, result: Place[])=>{}) {
-  console.log(getSearchFormData())
-
-  if (Math.random() < 0.5){
-    cb(new Error, null)
-  } else {
-    cb(null, [])
-  }
+export function search (SearchFormData: SearchFormData) {
+  console.log(SearchFormData)
 }
 
-// function trySearch(){
-//   console.log('trySearch')
-// }
-//
-//
-//
-// export function search (SearchFormData: SearchFormData) {
-//   console.log(SearchFormData)
-// }
-// const searchButton = document.getElementById('searchButton2')
-// if (searchButton != null){
-//  searchButton.onclick = ()=>{
-//    console.log(123)
-//  }
-// }
+

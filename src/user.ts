@@ -1,12 +1,38 @@
 import { renderBlock } from './lib.js'
 
-class User {
-
+export interface userDataInterface {
+  userName: unknown
+  userAvatar: unknown
 }
 
-export function renderUserBlock (favoriteItemsAmount:number, userName: string, userAvatar:string ) {
-  const favoritesCaption = favoriteItemsAmount ? favoriteItemsAmount : 'ничего нет'
-  const hasFavoriteItems = favoriteItemsAmount ? true : false
+type favouritesAmountData = {
+  favouriteItemAmount?: unknown
+}
+
+const favouritesAmountData: favouritesAmountData = {
+  favouriteItemAmount: 3
+}
+
+const userData: userDataInterface = {
+  userName: 'Wade Warren',
+  userAvatar: '../public/img/avatar.png',
+}
+
+localStorage.setItem('user', JSON.stringify(userData))
+localStorage.setItem('favouritesAmount', JSON.stringify(favouritesAmountData))
+
+export const getUserData:userDataInterface = JSON.parse(localStorage.getItem('user'))
+
+export const getFavouritesAmountData:favouritesAmountData = JSON.parse(localStorage.getItem('favouritesAmount'))
+
+
+
+
+export function renderUserBlock (userAvatar: userDataInterface['userAvatar'], userName: userDataInterface['userName'], favouritesAmount: favouritesAmountData) {
+  // const userName:userData = getUserData.userAvatar
+
+  const favoritesCaption = favouritesAmountData.favouriteItemAmount ? favouritesAmountData.favouriteItemAmount : 'ничего нет'
+  const hasFavoriteItems = favouritesAmountData.favouriteItemAmount ? true : false
 
   renderBlock(
     'user-block',
