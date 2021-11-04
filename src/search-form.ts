@@ -1,4 +1,6 @@
 import {renderBlock, renderBlock2} from './lib.js'
+import {favourites, getFavouritesAmountData} from "./user.js";
+
 // import {renderSearchResultsBlock, renderSearchResultsBlock2} from "./search-results.js";
 // let dbData;
 // fetch('http://localhost:3100/places')
@@ -119,29 +121,68 @@ export function search(getSearchFormData: SearchFormData){
         renderSearchedBlock(key)
       })
     })
+      .then(()=>{
+        const favButton = [].slice.call(document.getElementsByClassName('favorites'))
+        function classToggler(classToToggle, e) {
+
+          console.log(e.target.nextElementSibling.currentSrc)
+          let testData = Object.assign({}, e.path[4].dataset)
+          let id = testData.id
+          let name = testData.name
+          let img = testData.img
+          let newObj ={
+            [id]:{}
+          }
+          let tesDataToFav = Object.assign(newObj[id], {id}, {img}, {name})
+
+
+          if (compare(favourites, newObj))
+          {
+
+            delete favourites[id]
+            e.target.classList.remove(classToToggle)
+            localStorage.setItem('favourites', JSON.stringify(favourites))
+            localStorage.setItem('favouritesAmount', JSON.stringify(Object.keys(favourites).length))
+
+            return
+          }
+          {
+
+
+            let newFav = Object.assign(favourites, newObj)
+            localStorage.setItem('favourites', JSON.stringify(newFav))
+            e.target.classList.add(classToToggle)
+
+
+            localStorage.setItem('favouritesAmount', JSON.stringify(Object.keys(favourites).length))
+            console.log(getFavouritesAmountData)
+          }
+        }
+        favButton.forEach(button => {
+          button.addEventListener('click', e => classToggler('active', e))
+        })
+      })
   }
 
 
 
-  // export function toggleFavourites(id:number, name: string, image: string){
-  // // if(document.getElementsByClassName('favorites').namedItem(`id${id}`).classList.contains('active'))
-  //
-  //   console.log(id, name, image)
-  //   console.log('click')
-  //   }
-// <p>${key.name}</p>
+
 export function renderSearchedBlock(data:Place){
+    const dataInfoName: string = data.name
+  const dataInfoId: number = data.id
+  const dataInfoImg: string = data.image
   renderBlock2('search-results-block', `
-                  <ul class="results-list">
+  
+                  <ul class="results-list" data-id="${dataInfoId}" data-name="${dataInfoName}" data-img="${dataInfoImg}">
       <li class="result">
         <div class="result-container">
           <div class="result-img-container">
-            <div class="favorites" id="favouritesButton"></div>
-            <img class="result-img" src="${data.image}" alt="">
+            <div class="favorites id-${dataInfoId}" id="favouritesButton"></div>
+            <img class="result-img" src="${dataInfoImg}" alt="">
           </div>	
           <div class="result-info">
             <div class="result-info--header">
-              <p>${data.name}</p>
+              <p class="propName">${dataInfoName}</p>
               <p class="price">${data.price} &#8381;</p>
             </div>
             <div class="result-info--map"><i class="map-icon"></i> ${data.remoteness} км от вас</div>
@@ -155,17 +196,21 @@ export function renderSearchedBlock(data:Place){
         </div>
       </li>
         `)
-  const favButton = [].slice.call(document.getElementsByClassName('favorites'))
-  function classToggler(classToToggle, e) {
-    e.target.classList.toggle(classToToggle)
-    console.log(classToToggle)
-    console.log(localStorage.getItem('favouritesAmount'))
-  }
-  favButton.forEach(button => {
-    button.addEventListener('click', e => classToggler('active', e))
-  })
+
+
 }
 
 export function clearRender(){
   document.getElementById('search-results-block').innerHTML = ""
 }
+
+export function compare(obj1, obj2){
+
+  for (let key in obj1) {
+    if (obj2.hasOwnProperty(key)) {
+      return true;
+    }
+    return false
+  }
+}
+
