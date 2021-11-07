@@ -1,8 +1,8 @@
 import { renderBlock } from './lib.js'
 
 export interface userDataInterface {
-  userName: unknown
-  userAvatar: unknown
+  userName: string
+  userAvatar: string
 }
 
 type favouritesAmountData = {
@@ -21,9 +21,27 @@ const userData: userDataInterface = {
 localStorage.setItem('user', JSON.stringify(userData))
 localStorage.setItem('favouritesAmount', JSON.stringify(favouritesAmountData))
 
-export const getUserData:userDataInterface = JSON.parse(localStorage.getItem('user'))
+// export const getUserData:userDataInterface = JSON.parse(localStorage.getItem('user'))
 
-export const getFavouritesAmountData:favouritesAmountData = JSON.parse(localStorage.getItem('favouritesAmount'))
+// export const getFavouritesAmountData:favouritesAmountData = JSON.parse(localStorage.getItem('favouritesAmount'))
+export function getUserData() {
+  const getFromStorage = localStorage.getItem('user')
+  let getData: unknown
+  if (getFromStorage){
+    getData = JSON.parse(getFromStorage)
+  }
+  if(typeof getData === "object"){
+    return getData
+  }
+ return null
+}
+
+export function getFavouritesAmountData(){
+  const getFromStorage = localStorage.getItem('favouritesAmount')
+  if (getFromStorage != null){
+    return parseInt(getFromStorage)
+  }
+}
 
 
 
