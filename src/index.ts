@@ -1,7 +1,8 @@
 import { renderSearchFormBlock } from './search-form.js'
 import { renderSearchStubBlock } from './search-results.js'
-import { renderUserBlock, getUserData, getFavouritesAmountData } from './user.js'
+import { renderUserBlock, userStorageService, favouritesStorageService } from './user.js'
 import { renderToast } from './lib.js'
+
 
 
 
@@ -67,7 +68,9 @@ const dateStringDayPlusOne = new Intl.DateTimeFormat()
 console.log(dateStringLateMax)
 
 window.addEventListener('DOMContentLoaded', () => {
-  renderUserBlock(getUserData.userAvatar, getUserData.userName, getFavouritesAmountData)
+  let userData = userStorageService.getUser()
+  let favouritesData = favouritesStorageService.getFavouritesAmount()
+  renderUserBlock(userData?.userAvatar, userData?.userName, favouritesData?.favouriteItemAmount)
   renderSearchFormBlock(`${dateStringNow}`, `${dateStringNow}`, `${dateStringNowMax}`, `${dateStringLate}`, `${dateStringLate}`, `${dateStringLateMax}`)
   renderSearchStubBlock()
   renderToast(
