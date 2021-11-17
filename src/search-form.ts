@@ -1,6 +1,6 @@
 import {renderBlock, renderBlock2} from './lib.js'
 import {favourites} from "./user.js";
-import {FlatRentSdk} from './sdk/public/scripts/flat-rent-sdk.js';
+import {Flat, FlatRentSdk, FlatWithTotalPrice} from './sdk/public/scripts/flat-rent-sdk.js';
 // import {database} from '../sdk/public/scripts/flat-rent-sdk.js'
 
 // import {renderSearchResultsBlock, renderSearchResultsBlock2} from "./search-results.js";
@@ -77,7 +77,7 @@ export function renderSearchFormBlock (dateIn: string, dateInMin: string, dateIn
   const searchButton = document.getElementById('searchButton2')
   if (searchButton != null){
         searchButton.onclick = ()=>{
-      search(getSearchFormData())
+      search(getSearchFormData(), getPlaces)
       console.log(dbData)
 
     }
@@ -105,8 +105,8 @@ export function getSearchFormData(): SearchFormData{
 
 }
 
-export function mapObjToArray(data){
-  let array = []
+export function mapObjToArray(data: any){
+  let array : Array<number> = []
   Object.keys(data).forEach(function (key){
     array.push(data[key])
       })
@@ -117,134 +117,179 @@ export function mapObjToArray(data){
 // }
 
 
-export async function search(getSearchFormData: SearchFormData){
-  let db
-  let dbA = []
+type GetPlacesStrategy  = (searchFormData: SearchFormData)=> Promise<FlatAndPlace[]>
 
+type FlatAndPlace ={
+  id: string,
+  name: string
+  description: string
+  image: string
+  remoteness: number | null
+  bookedDates: string[]
+  price: number
+  coordinates: [number, number] | null
+  }
+
+const mapPlaceToFlatAndPlace = (place: Place) : FlatAndPlace=>{
+  return {
+    ...place,
+    id: place.id.toString(),
+    coordinates: null
+  }
+}
+
+const mapFlatToFlatAndPlace = (flat: FlatWithTotalPrice) : FlatAndPlace=>{
+    return {
+    id: flat.id,
+    price: flat.totalPrice,
+    bookedDates: flat.bookedDates.map((value)=>{
+      return value.toString()
+    }),
+    name: flat.title,
+    description: flat.details,
+    image: flat.photos[0],
+    remoteness: null,
+    coordinates: flat.coordinates
+  }
+}
+
+function renderSortBlock(){
+  renderBlock2(
+    'search-results-block',
+    `
+    <div class="search-results-header">
+        <p>Результаты поиска</p>
+        <div class="search-results-filter">
+            <span><i class="icon icon-filter"></i> Сортировать:</span>
+            <select>
+                <option selected="">Сначала дешёвые</option>
+                <option selected="">Сначала дорогие</option>
+                <option>Сначала ближе</option>
+            </select>
+        </div>
+    </div>
+    `
+    )
+}
+
+
+async function getPlaces(searchFormData: SearchFormData) :Promise<FlatAndPlace[]>{
+  debugger
+  let dbA =[]
   const resultApi = await fetch('http://localhost:3100/places')
-        .then(r => r.json())
-  dbA = mapObjToArray(resultApi)
+    .then(r => r.json())
+  dbA = mapObjToArray(resultApi).map(mapPlaceToFlatAndPlace)
 
-  const resultSdk = await flatRentSdk.search(getSearchFormData)
+  const resultSdk = await flatRentSdk.search(searchFormData)
+  const flatAndPlaceArray =  resultSdk.map(mapFlatToFlatAndPlace)
 
-  dbA = dbA.concat(resultSdk)
-  let filtered = dbA
-    .filter(el => el.price >= getSearchFormData.priceLimit)
+  dbA = dbA.concat(flatAndPlaceArray)
+  return dbA
+}
+
+function classTogglerFavoritePlace(classToToggle:string, e: any) {
+
+
+  let testData : Pick<Place, 'id' | 'name' | 'image'> = Object.assign({}, e.path[4].dataset)
+  let targetObjectId = testData.id
+
+  let newObj : Record<string, Pick<Place, 'id' | 'name' | 'image'>> ={
+    [targetObjectId]:testData
+  }
+
+
+
+  if (compare(favourites, newObj))
+  {
+
+    let b = delete favourites[targetObjectId];
+    e.target.classList.remove(classToToggle)
+    localStorage.setItem('favourites', JSON.stringify(favourites))
+    localStorage.setItem('favouritesAmount', JSON.stringify(Object.keys(favourites).length))
+
+    return
+  }
+
+
+
+  let newFav = Object.assign(favourites, newObj)
+  localStorage.setItem('favourites', JSON.stringify(newFav))
+  e.target.classList.add(classToToggle)
+
+
+  localStorage.setItem('favouritesAmount', JSON.stringify(Object.keys(favourites).length))
+  // console.log(getFavouritesAmountData)
+
+}
+
+function renderSearchedBlockItems(data: FlatAndPlace[]){
   clearRender()
-  filtered.forEach(function (key:Place){
+  renderBlock2(
+    'search-results-block',
+    `
+    <div class="search-results-header">
+        <p>Результаты поиска</p>
+        <div class="search-results-filter">
+            <span><i class="icon icon-filter"></i> Сортировать:</span>
+            <select>
+                <option selected="">Сначала дешёвые</option>
+                <option selected="">Сначала дорогие</option>
+                <option>Сначала ближе</option>
+            </select>
+        </div>
+    </div>
+    `
+  )
+  data.forEach(function (key:FlatAndPlace){
     renderSearchedBlock(key)
   })
+}
+function findElementsByClassName(className: any){
+  return [].slice.call(document.getElementsByClassName(className))
 
-  const favButton = [].slice.call(document.getElementsByClassName('favorites'))
-  function classToggler(classToToggle:string, e) {
-
-    // console.log(e.target.nextElementSibling.currentSrc)
-    let testData : Pick<Place, 'id' | 'name' | 'image'> = Object.assign({}, e.path[4].dataset)
-    let targetObjectId = testData.id
-
-    let newObj : Record<string, Pick<Place, 'id' | 'name' | 'image'>> ={
-      [targetObjectId]:testData
-    }
-    // let tesDataToFav = Object.assign(newObj[testData.id], testData)
-
-
-    if (compare(favourites, newObj))
-    {
-
-      delete favourites[targetObjectId]
-      e.target.classList.remove(classToToggle)
-      localStorage.setItem('favourites', JSON.stringify(favourites))
-      localStorage.setItem('favouritesAmount', JSON.stringify(Object.keys(favourites).length))
-
-      return
-    }
-
-
-
-    let newFav = Object.assign(favourites, newObj)
-    localStorage.setItem('favourites', JSON.stringify(newFav))
-    e.target.classList.add(classToToggle)
-
-
-    localStorage.setItem('favouritesAmount', JSON.stringify(Object.keys(favourites).length))
-    // console.log(getFavouritesAmountData)
-
-  }
-  favButton.forEach(button => {
-    button.addEventListener('click', e => classToggler('active', e))
+}
+function addEventListenerToElements(elements: any, event: any, callback: any){
+  elements.forEach((element: { addEventListener: (arg0: any, arg1: any) => void; }) => {
+    element.addEventListener(event, callback)
   })
+}
+
+export async function search(searchFormData: SearchFormData, getPlaces: GetPlacesStrategy){
+  // debugger
+
+  let dbA = await getPlaces(searchFormData)
+  // const resultApi = await fetch('http://localhost:3100/places')
+  //       .then(r => r.json())
+  // dbA = mapObjToArray(resultApi)
+  //
+  // const resultSdk = await flatRentSdk.search(getSearchFormData)
+  // console.log(resultSdk)
+  // dbA = dbA.concat(resultSdk)
+  // console.log(dbA)
+  let filtered = dbA
+    .filter(el => el.price <= searchFormData.priceLimit)
+  // clearRender()
+  // filtered.forEach(function (key:FlatAndPlace){
+  //   renderSearchedBlock(key)
+  // })
+
+  renderSearchedBlockItems(filtered)
+
+  const favButton = findElementsByClassName('favorites')
 
 
+  addEventListenerToElements(favButton, 'click', (e: any)=> classTogglerFavoritePlace('active', e))
 
-    // fetch('http://localhost:3100/places')
-    // .then(r => r.json())
-    // .then(r => db = r)
-    // .then(()=>{
-    //   dbA = mapObjToArray(db)
-    //   console.log(dbA)
-    // })
-    // // .then(()=>{
-    // //   // console.log(dbA.filter(el => el.price >= getSearchFormData.maxPay))
-    // //   // dbA
-    // //   //   .filter(el => el.price >= getSearchFormData.maxPay)
-    // //   let filtered = dbA
-    // //     .filter(el => el.price >= getSearchFormData.priceLimit)
-    // //   // console.log(filtered, 'filtered')
-    // //   // document.getElementById('search-results-block').innerHTML = ""
-    // //   clearRender()
-    // //   filtered.forEach(function (key:Place){
-    // //     renderSearchedBlock(key)
-    // //   })
-    // // })
-    //   .then(()=>{
-    //     const favButton = [].slice.call(document.getElementsByClassName('favorites'))
-    //     function classToggler(classToToggle:string, e) {
-    //
-    //       // console.log(e.target.nextElementSibling.currentSrc)
-    //       let testData : Pick<Place, 'id' | 'name' | 'image'> = Object.assign({}, e.path[4].dataset)
-    //       let targetObjectId = testData.id
-    //
-    //       let newObj : Record<string, Pick<Place, 'id' | 'name' | 'image'>> ={
-    //         [targetObjectId]:testData
-    //       }
-    //       // let tesDataToFav = Object.assign(newObj[testData.id], testData)
-    //
-    //
-    //       if (compare(favourites, newObj))
-    //       {
-    //
-    //         delete favourites[targetObjectId]
-    //         e.target.classList.remove(classToToggle)
-    //         localStorage.setItem('favourites', JSON.stringify(favourites))
-    //         localStorage.setItem('favouritesAmount', JSON.stringify(Object.keys(favourites).length))
-    //
-    //         return
-    //       }
-    //
-    //
-    //
-    //         let newFav = Object.assign(favourites, newObj)
-    //         localStorage.setItem('favourites', JSON.stringify(newFav))
-    //         e.target.classList.add(classToToggle)
-    //
-    //
-    //         localStorage.setItem('favouritesAmount', JSON.stringify(Object.keys(favourites).length))
-    //         // console.log(getFavouritesAmountData)
-    //
-    //     }
-    //     favButton.forEach(button => {
-    //       button.addEventListener('click', e => classToggler('active', e))
-    //     })
-    //   })
   }
 
 
 
 
-export function renderSearchedBlock(data:Place){
+export function renderSearchedBlock(data:FlatAndPlace){
     const dataInfoName: string = data.name
-  const dataInfoId: number = data.id
+  const dataInfoId: string = data.id
   const dataInfoImg: string = data.image
+
   renderBlock2('search-results-block', `
   
                   <ul class="results-list" data-id="${dataInfoId}" data-name="${dataInfoName}" data-img="${dataInfoImg}">
@@ -278,7 +323,7 @@ export function clearRender(){
   document.getElementById('search-results-block').innerHTML = ""
 }
 
-export function compare(sourceObj, targetObj){
+export function compare(sourceObj: { hasOwnProperty?: any; }, targetObj: Record<string, Pick<Place, "id" | "name" | "image">>){
 
   for (let key in targetObj) {
     if (sourceObj.hasOwnProperty(key)) {

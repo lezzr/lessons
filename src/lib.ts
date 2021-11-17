@@ -2,6 +2,8 @@ export function renderBlock (elementId, html) {
   const element = document.getElementById(elementId)
   element.innerHTML = html
 }
+
+
 export function renderBlock2 (elementId, html) {
   const element = document.getElementById(elementId)
   element.insertAdjacentHTML('beforeend', html)

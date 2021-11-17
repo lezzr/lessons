@@ -14,7 +14,7 @@ export interface Flat {
   bookedDates: number[];
   price: number;
 }
-
+export type FlatWithTotalPrice = Omit<Flat, 'price'> & {totalPrice: number}
 
 export function cloneDate(date: Date): Date;
 export function addDays(date: Date, days: number);
@@ -22,9 +22,9 @@ export function addDays(date: Date, days: number);
 
 export class FlatRentSdk {
 
-  get(id: string): Promise<Flat>;
+  get(id: string): Promise<FlatWithTotalPrice>;
 
-  search(parameters: SearchParameters): Flat[];
+  search(parameters: SearchParameters): FlatWithTotalPrice[];
 
   book(flatId: number, checkInDate: Date, checkOutDate: Date): number;
 
