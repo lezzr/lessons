@@ -1,7 +1,7 @@
 export interface SearchParameters {
   city: string;
-  checkInDate: Date;
-  checkOutDate: Date;
+  checkInDate: Date | null;
+  checkOutDate: Date | null;
   priceLimit: number;
 }
 
