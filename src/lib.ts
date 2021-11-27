@@ -1,15 +1,31 @@
-export function renderBlock (elementId, html) {
+export function renderBlock (elementId: string, html: string) {
   const element = document.getElementById(elementId)
-  element.innerHTML = html
+  if(element){
+    element.innerHTML = html
+  }
+
 }
 
 
-export function renderBlock2 (elementId, html) {
+export function renderBlock2 (elementId: string, html: string) {
   const element = document.getElementById(elementId)
-  element.insertAdjacentHTML('beforeend', html)
+
+  element?.insertAdjacentHTML('beforeend', html)
 }
 
-export function renderToast (message, action) {
+export type MessageToast = {
+  text: string
+  type: string
+}
+export type ActionToast = {
+  name: string
+  handler: Function
+}
+
+export type Maybe<T> = T | null
+
+
+export function renderToast (message:Maybe<MessageToast> , action: Maybe<ActionToast>) {
   let messageText = ''
 
   if (message != null) {

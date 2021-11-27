@@ -6,12 +6,12 @@ export interface userDataInterface {
 }
 
 type favouritesAmountData = {
-  favouriteItemAmount?: number
+  favouriteItemAmount: number | null
 }
 
 
 
-export const favourites = {
+export const favourites : Record<number, unknown> = {
 
 }
 
@@ -24,12 +24,14 @@ const favouritesAmountData: favouritesAmountData = {
   userAvatar: '/img/avatar.png',
 }
 export const favouritesStorageService ={
-  getFavouritesAmount: (): favouritesAmountData | null=>{
+  getFavouritesAmount: (): favouritesAmountData =>{
     const getFromStorage = localStorage.getItem('favouritesAmount')
     if (getFromStorage != null){
       return JSON.parse(getFromStorage) as favouritesAmountData
     }
-    return null
+    return {
+      favouriteItemAmount: null
+    }
   },
   setFavouritesAmount: (favouritesAmountData: favouritesAmountData)=>{
     localStorage.setItem('favouritesAmount', JSON.stringify(favouritesAmountData))
@@ -57,16 +59,17 @@ userStorageService.setUser(userData)
 // localStorage.setItem('favouritesAmount', JSON.stringify(favouritesAmountData))
 favouritesStorageService.setFavouritesAmount(favouritesAmountData)
 
-export const getFavouritesAmountData =  favouritesStorageService.getFavouritesAmount()
+// export const getFavouritesAmountData =  favouritesStorageService.getFavouritesAmount()
 
 
 
 
-export function renderUserBlock (userAvatar: userDataInterface['userAvatar'], userName: userDataInterface['userName'], getFavouritesAmountData: favouritesAmountData) {
+export function renderUserBlock (userAvatar: userDataInterface['userAvatar'], userName: userDataInterface['userName'], favouritesAmountData: favouritesAmountData) {
+
+  const hasFavoriteItems = !!favouritesAmountData.favouriteItemAmount
+  const favoritesCaption = hasFavoriteItems ? favouritesAmountData.favouriteItemAmount : 'ничего нет'
 
 
-  const favoritesCaption = getFavouritesAmountData ? getFavouritesAmountData : 'ничего нет'
-  const hasFavoriteItems = getFavouritesAmountData ? true : false
 
   renderBlock(
     'user-block',

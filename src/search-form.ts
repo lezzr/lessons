@@ -1,5 +1,5 @@
 import {renderBlock, renderBlock2} from './lib.js'
-import {favourites} from "./user.js";
+import {favourites, favouritesStorageService} from "./user.js";
 import {Flat, FlatRentSdk, FlatWithTotalPrice} from './sdk/public/scripts/flat-rent-sdk.js';
 // import {database} from '../sdk/public/scripts/flat-rent-sdk.js'
 
@@ -70,7 +70,9 @@ export function renderSearchFormBlock (dateIn: string, dateInMin: string, dateIn
         </div>
       </fieldset>
     </form>
-                      <div><button id="searchButton2">Найти22</button></div>
+        <div><button id="searchButton2">Найти22</button></div>
+        <checkbox id="checkbox-api">api</checkbox>
+        <checkbox id="checkbox-sdk">sdk</checkbox>    
     `
   )
 
@@ -93,7 +95,7 @@ export function dateFormat(data: unknown): Date | null{
 }
 
 export function getSearchFormData(): SearchFormData{
-  const formData = new FormData(document.querySelector('#search-form'))
+  const formData = new FormData(document.querySelector<HTMLFormElement>('#search-form') || undefined)
 
   console.log(formData)
   return {
@@ -105,8 +107,8 @@ export function getSearchFormData(): SearchFormData{
 
 }
 
-export function mapObjToArray(data: any){
-  let array : Array<number> = []
+export function mapObjToArray<T>(data: any): Array<T>{
+  let array : Array<T> = []
   Object.keys(data).forEach(function (key){
     array.push(data[key])
       })
@@ -152,6 +154,36 @@ const mapFlatToFlatAndPlace = (flat: FlatWithTotalPrice) : FlatAndPlace=>{
     coordinates: flat.coordinates
   }
 }
+// function initSortSelect(){
+//   const sortSelect = document.getElementById('select-options')
+//   if(!sortSelect){
+//     return
+//   }
+//   sortSelect.addEventListener('onchange', (event)=>{
+//     search(getSearchFormData(), getPlaces)
+//   })
+
+  // async () => {
+  //
+  //   const result = await getPlaces();
+  //
+  //   if(sortBy == 'price') {
+  //     return result.sort()
+  //   }
+  //
+  //
+  // }
+  // async () => {
+  //
+  //   const result = await getPlaces();
+  //
+  //   if(sortBy == 'price') {
+  //     return result.sort(sortDirection == 'asc' ? sortPlacesAsc : sortPlacesDesc)
+  //   }
+  // return result
+  //
+  // }
+// }
 
 function renderSortBlock(){
   renderBlock2(
@@ -161,10 +193,10 @@ function renderSortBlock(){
         <p>Результаты поиска</p>
         <div class="search-results-filter">
             <span><i class="icon icon-filter"></i> Сортировать:</span>
-            <select>
-                <option selected="">Сначала дешёвые</option>
-                <option selected="">Сначала дорогие</option>
-                <option>Сначала ближе</option>
+            <select id="select-options">
+                <option value="price/ask" selected="">Сначала дешёвые</option>
+                <option value="price/desk" selected="">Сначала дорогие</option>
+                <option value="distance/ask">Сначала ближе</option>
             </select>
         </div>
     </div>
@@ -178,7 +210,7 @@ async function getPlaces(searchFormData: SearchFormData) :Promise<FlatAndPlace[]
   let dbA =[]
   const resultApi = await fetch('http://localhost:3100/places')
     .then(r => r.json())
-  dbA = mapObjToArray(resultApi).map(mapPlaceToFlatAndPlace)
+  dbA = mapObjToArray<Place>(resultApi).map(mapPlaceToFlatAndPlace)
 
   const resultSdk = await flatRentSdk.search(searchFormData)
   const flatAndPlaceArray =  resultSdk.map(mapFlatToFlatAndPlace)
@@ -202,7 +234,7 @@ function classTogglerFavoritePlace(classToToggle:string, e: any) {
   if (compare(favourites, newObj))
   {
 
-    let b = delete favourites[targetObjectId];
+    delete favourites[targetObjectId];
     e.target.classList.remove(classToToggle)
     localStorage.setItem('favourites', JSON.stringify(favourites))
     localStorage.setItem('favouritesAmount', JSON.stringify(Object.keys(favourites).length))
@@ -213,6 +245,7 @@ function classTogglerFavoritePlace(classToToggle:string, e: any) {
 
 
   let newFav = Object.assign(favourites, newObj)
+
   localStorage.setItem('favourites', JSON.stringify(newFav))
   e.target.classList.add(classToToggle)
 
@@ -320,7 +353,10 @@ export function renderSearchedBlock(data:FlatAndPlace){
 }
 
 export function clearRender(){
-  document.getElementById('search-results-block').innerHTML = ""
+  let element = document.getElementById('search-results-block')
+  if(element){
+    element.innerHTML = ""
+  }
 }
 
 export function compare(sourceObj: { hasOwnProperty?: any; }, targetObj: Record<string, Pick<Place, "id" | "name" | "image">>){

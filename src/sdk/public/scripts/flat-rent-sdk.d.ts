@@ -17,7 +17,7 @@ export interface Flat {
 export type FlatWithTotalPrice = Omit<Flat, 'price'> & {totalPrice: number}
 
 export function cloneDate(date: Date): Date;
-export function addDays(date: Date, days: number);
+export function addDays(date: Date, days: number): any;
 
 
 export class FlatRentSdk {
