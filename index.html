@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Socket</title>
+    <script src="https://cdn.socket.io/4.2.0/socket.io.min.js" integrity="sha384-PiBR5S00EtOj2Lto9Uu81cmoyZqR57XcOna1oAuVuIEjzj0wpqDVfD0JA9eXlRsj" crossorigin="anonymous"></script>
+</head>
+<body>
+<input id="input" type="text" autofocus>
+<button id="button">Send</button>
+<div>Messages:::</div>
+<div id="messages"></div>
+<hr>
+<div id="count"></div>
+<hr>
+<div>Sys info:::</div>
+<div id="system"></div>
+<script>
+    const socket = io('localhost:5555');
+    const messageBlock = document.getElementById('messages');
+    const sendButton = document.getElementById('button');
+    const input = document.getElementById('input');
+    const sysMsg = document.getElementById('system');
+    const userCountBlock = document.getElementById('count');
+
+    // function nameGen() {
+    //     return (Math.random() + 1).toString(36).substring(7)
+    // }
+    //
+    //     if (!localStorage.getItem('name')) {
+    //         localStorage.setItem('Name', nameGen())
+    //     }
+    //
+    //
+    // const randomName = localStorage.getItem('Name')
+
+
+
+    // socket.on('connect', () => {
+    //     sysMsg.insertAdjacentHTML('beforeend', `<p>Me connecto</p>`)
+    //     console.log('connected user?');
+    // });
+
+    //connection
+
+
+    socket.on('client-connect', () => {
+        const data = {
+            clientName: socket.id
+                    }
+        socket.emit('client-connect-emmit', data)
+        // sysMsg.insertAdjacentHTML('beforeend', `<p>${socket.id} is connected now</p>`)
+        console.log('connected user?');
+    });
+
+    socket.on('client-connect-server-response', ({clientName}, userCount) =>{
+        userCountBlock.replaceWith(`${userCount} is online`)
+        sysMsg.insertAdjacentHTML('beforeend', `<p>${clientName} is connected now</p>`)
+    })
+
+
+
+    //disconnection
+    socket.on('disconnect', () => {
+        const data = {
+            clientName: socket.id
+        }
+        // socket.emit('client-disconnected')
+        socket.emit('disconnect', data)
+        // sysMsg.insertAdjacentHTML('beforeend', `<p>${clientName} is Disconnected</p>`)
+    });
+    socket.on('client-disconnect-server-response', ({clientName}, userCount) => {
+        userCountBlock.replaceWith(`${userCount} is online`)
+        sysMsg.insertAdjacentHTML('beforeend', `<p>${clientName} is Disconnected</p>`)
+        console.log('disconnected user?');
+    });
+
+
+
+    //reconnection
+    socket.on('reconnect', () => {
+        // socket.emit('client-disconnected')
+        socket.emit('reconnect')
+    });
+    socket.on('reconnected', () => {
+        sysMsg.insertAdjacentHTML('beforeend', `<p>Me reconnected</p>`)
+        console.log('disconnected user?');
+    });
+
+
+
+    // socket.emit('client-msg', 'test');
+
+    sendButton.onclick = () => {
+        const data = {
+            message: input.value,
+            clientName: socket.id
+        };
+
+        socket.emit('client-msg', data);
+    }
+
+    socket.on('server-msg', ({ message, clientName }) => {
+        messageBlock.insertAdjacentHTML('beforeend', `<p>${clientName}: ${message}</p>`)
+    })
+</script>
+</body>
+</html>
